@@ -14,8 +14,10 @@ namespace BastardFat.AgileBoard.Site.Accounts
                 if (!HttpContext.Current.Request.Cookies.AllKeys.Contains("__AUTH")) return null;
                 return HttpContext.Current.Request.Cookies["__AUTH"].Value;
             }
-            set => 
+            set
+            {
                 HttpContext.Current.Response.Cookies.Set(new HttpCookie("__AUTH", value) { });
+            }
         }
 
         public static void UnsetCookie() =>

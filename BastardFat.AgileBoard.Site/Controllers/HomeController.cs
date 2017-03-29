@@ -15,7 +15,13 @@ namespace BastardFat.AgileBoard.Site.Controllers
         
         public ActionResult Board()
         {
+            using (var db = new Database.AgileBoardDBContext())
+            {
+                db.Users.ToList();
 
+            }
+
+            return View();
         }
 
     }
