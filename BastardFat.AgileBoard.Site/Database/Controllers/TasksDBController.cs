@@ -54,5 +54,21 @@ namespace BastardFat.AgileBoard.Site.Database.Controllers
                 return false;
             }
         }
+
+        public bool Remove(int TaskId)
+        {
+            try
+            {
+                return Database.TryTransaction(() =>
+                    Database.Tasks.Remove(Database.Tasks.FirstOrDefault(t => t.Id == TaskId))
+                );
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
     }
 }

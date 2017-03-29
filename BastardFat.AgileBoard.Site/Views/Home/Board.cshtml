@@ -15,8 +15,12 @@
             @foreach (var item in Model.Where(t => t.Stage == 0))
             {
                 <div class="panel panel-danger">
-                    <div class="panel-heading">
-                        <span>@item.Title</span>
+                    <div class="panel-heading cursor-hand" onclick="collapse('block_@(item.Id)')">
+
+                        <span>
+                            <span class="glyphicon glyphicon-trash" onclick="removeTask(@item.Id)" style="padding: 1px 6px;"></span>
+                            @item.Title
+                        </span>
                         <span style="float:right">
                             <button class="btn btn-primary" style="padding: 1px 6px;" onclick="moveRight(@item.Id)">
                                 <span class="glyphicon glyphicon-arrow-right">
@@ -24,7 +28,7 @@
                             </button>
                         </span>
                     </div>
-                    <div class="panel-body">@Html.Raw(item.Markdown)</div>
+                    <div class="panel-body" id="block_@(item.Id)">@Html.Raw(BastardFat.AgileBoard.Site.Support.Markdown.ToHtml(item.Markdown))</div>
                 </div>
             }
         </td>
@@ -32,8 +36,11 @@
             @foreach (var item in Model.Where(t => t.Stage == 1))
             {
                 <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <span>@item.Title</span>
+                    <div class="panel-heading cursor-hand" onclick="collapse('block_@(item.Id)')">
+                        <span>
+                            <span class="glyphicon glyphicon-trash" onclick="removeTask(@item.Id)" style="padding: 1px 6px;"></span>
+                            @item.Title
+                        </span>
                         <span style="float:right">
                             <button class="btn btn-danger" style="padding: 1px 6px;" onclick="moveLeft(@item.Id)">
                                 <span class="glyphicon glyphicon-arrow-left">
@@ -45,7 +52,7 @@
                             </button>
                         </span>
                     </div>
-                    <div class="panel-body">@Html.Raw(item.Markdown)</div>
+                    <div class="panel-body" id="block_@(item.Id)">@Html.Raw(BastardFat.AgileBoard.Site.Support.Markdown.ToHtml(item.Markdown))</div>
                 </div>
             }
         </td>
@@ -53,8 +60,11 @@
             @foreach (var item in Model.Where(t => t.Stage == 2))
             {
                 <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <span>@item.Title</span>
+                    <div class="panel-heading cursor-hand" onclick="collapse('block_@(item.Id)')">
+                        <span>
+                            <span class="glyphicon glyphicon-trash" onclick="removeTask(@item.Id)" style="padding: 1px 6px;"></span>
+                            @item.Title
+                        </span>
                         <span style="float:right">
                             <button class="btn btn-primary" style="padding: 1px 6px;" onclick="moveLeft(@item.Id)">
                                 <span class="glyphicon glyphicon-arrow-left">
@@ -66,29 +76,64 @@
                             </button>
                         </span>
                     </div>
-                    <div class="panel-body">@Html.Raw(item.Markdown)</div>
+                    <div class="panel-body" id="block_@(item.Id)">@Html.Raw(BastardFat.AgileBoard.Site.Support.Markdown.ToHtml(item.Markdown))</div>
                 </div>
             }
         </td>
     </tr>
 </table>
 
+<div class="shadow" style="margin:5px 10% 5px 10%;padding:10px;">
+    <h4>Добавить задачу</h4>
+    <div class="form-group">
+        <label for="title">Название:</label>
+        <input type="text" class="form-control" id="title">
+    </div>
+    <div class="form-group">
+        <label for="comment">Коментарий:</label>
+        <textarea class="form-control" rows="5" id="comment"></textarea>
+    </div>
+    <button type="button" class="btn btn-default" onclick="addTask()">Добавить</button>
+</div>
+
 <script>
+
+    function removeTask(id) {
+        $("body").addClass("loading");
+        sendRequest("/api/MainApi/RemoveTask?taskid=" + id, "Ошибка. Не удалось удалить запись", function () {
+            $("body").removeClass("loading");
+            location.reload(true);
+        });
+    }
+
     function moveRight(id) {
         $("body").addClass("loading");
         sendRequest("/api/MainApi/MoveRight?taskid=" + id, "Ошибка. Не удалось переместить запись", function () {
             $("body").removeClass("loading");
             location.reload(true);
-            
         });
     }
 
     function moveLeft(id) {
         $("body").addClass("loading");
         sendRequest("/api/MainApi/MoveLeft?taskid=" + id, "Ошибка. Не удалось переместить запись", function () {
-            location.reload(true);
             $("body").removeClass("loading");
+            location.reload(true);
         });
+    }
+
+    function addTask() {
+        $("body").addClass("loading");
+        var obj = {
+            Title: $("#title").val(),
+            Body: $("#comment").val(),
+        };
+
+        sendPost("/api/MainApi/AddTask", obj, "Ошибка. Не удалось добавить задачу", function () {
+            $("body").removeClass("loading");
+            location.reload(true);
+        })
+
     }
 
     function sendRequest(request, errorMessage, callback) {
@@ -104,4 +149,28 @@
         });
 
     }
+
+    function sendPost(request, jsondata, errorMessage, callback) {
+        $.ajax({
+            url: request,
+            dataType: "json",
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(jsondata),
+            error: function (xhr) {
+                alert(xhr.statusText);
+            }
+        }).done(function (Result) {
+            if (!Result)
+                alert(errorMessage);
+            else {
+                callback();
+            }
+        });
+    }
+
+    function collapse(id) {
+        $("#" + id).toggleClass("collapse");
+    }
+
 </script>
