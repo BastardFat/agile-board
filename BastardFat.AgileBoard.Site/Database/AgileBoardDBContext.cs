@@ -19,6 +19,7 @@ namespace BastardFat.AgileBoard.Site.Database
 
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Task> Tasks { get; set; }
 
         public T Transaction<T>(Func<T> func, bool isThrow = false) where T : class
         {

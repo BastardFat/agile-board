@@ -169,9 +169,15 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Database\AgileBoardDBContext.cs" />
+    <Compile Include="Database\AgileBoardDBController.cs" />
     <Compile Include="Database\AgileBoardDBInitializer.cs" />
+    <Compile Include="Database\AgileBoardDBManager.cs" />
+    <Compile Include="Database\Controllers\RolesDBController.cs" />
+    <Compile Include="Database\Controllers\TasksDBController.cs" />
     <Compile Include="Database\Tables\Role.cs" />
+    <Compile Include="Database\Tables\Task.cs" />
     <Compile Include="Database\Tables\User.cs" />
+    <Compile Include="Database\Controllers\UsersDBController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
