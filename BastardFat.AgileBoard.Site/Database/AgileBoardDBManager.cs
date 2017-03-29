@@ -13,12 +13,14 @@ namespace BastardFat.AgileBoard.Site.Database
             Database = new AgileBoardDBContext();
             UserDBController = new UsersDBController(Database);
             RoleDBController = new RolesDBController(Database);
+            TaskDBController = new TasksDBController(Database);
         }
 
         public AgileBoardDBContext Database;
 
         public UsersDBController UserDBController { get; set; }
         public RolesDBController RoleDBController { get; set; }
+        public TasksDBController TaskDBController { get; set; }
 
         #region IDisposable Support
         private bool disposedValue = false;

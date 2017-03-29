@@ -22,3 +22,64 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.table-3-cols > tbody > tr > td {
+    width: 30%;
+}
+
+.table-3-cols {
+    width: 100%;
+}
+
+    .table-3-cols > tbody > tr > th {
+        text-align: center;
+    }
+
+.panel-heading {
+    font-weight: bold;
+}
+
+.my_modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba( 0,0,0, .95 );
+    text-align: center;
+}
+
+
+body.loading {
+    overflow: hidden;
+}
+
+    body.loading .my_modal {
+        display: block;
+    }
+
+.loader {
+    top: 50%;
+    left: 50%;
+    margin-top: -60px;
+    margin-left: -60px;
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #444444; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    position: fixed;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

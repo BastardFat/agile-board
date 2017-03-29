@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+@model bool
+<h2>Login</h2>
+@if (Model)
+{
+    <div class="alert alert-danger">
+        <strong>Провал успешен!</strong> Вы все-таки ввели неверный логин или пароль
+    </div>
+}
+<form action="/Home/TryLogin">
+    <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Логин</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="user_login" placeholder="Логин">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputPassword3" class="col-sm-2 col-form-label">Пароль</label>
+        <div class="col-sm-10">
+            <input type="password" class="form-control" name="user_password" placeholder="Пароль">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="offset-sm-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Залогиниться</button>
+        </div>
+    </div>
+</form>

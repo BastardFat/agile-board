@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title – приложение ASP.NET</title>
+    <title>@ViewBag.Title – Agile board</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -21,9 +21,16 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
-                    <li>@Html.ActionLink("О программе", "About", "Home")</li>
-                    <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Глагная", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Доска", "Board", "Home")</li>
+                    @if (BastardFat.AgileBoard.Site.Accounts.AccountManager.CurrentUser == null)
+                    {
+                        <li>@Html.ActionLink("Войти", "Login", "Home")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink($"Выйти ({BastardFat.AgileBoard.Site.Accounts.AccountManager.CurrentUser.Name})", "Logout", "Home")</li>
+                    }
                 </ul>
             </div>
         </div>
@@ -32,7 +39,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year – приложение ASP.NET</p>
+            <p>&copy; @DateTime.Now.Year – Тестовое задание, чтоб всех уделать и показать, что я сопли не жую</p>
         </footer>
     </div>
 

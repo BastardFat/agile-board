@@ -1,7 +1,107 @@
 ﻿
 @{
-    ViewBag.Title = "Board";
+    ViewBag.Title = "Моя доска";
 }
+@model List<BastardFat.AgileBoard.Site.Database.Tables.Task>
+<div class="my_modal"><div class="loader"></div></div>
+<table class="table table-bordered table-3-cols">
+    <tr>
+        <th>Принято</th>
+        <th>В работе</th>
+        <th>На тестироании</th>
+    </tr>
+    <tr>
+        <td>
+            @foreach (var item in Model.Where(t => t.Stage == 0))
+            {
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <span>@item.Title</span>
+                        <span style="float:right">
+                            <button class="btn btn-primary" style="padding: 1px 6px;" onclick="moveRight(@item.Id)">
+                                <span class="glyphicon glyphicon-arrow-right">
+                                </span>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="panel-body">@Html.Raw(item.Markdown)</div>
+                </div>
+            }
+        </td>
+        <td>
+            @foreach (var item in Model.Where(t => t.Stage == 1))
+            {
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <span>@item.Title</span>
+                        <span style="float:right">
+                            <button class="btn btn-danger" style="padding: 1px 6px;" onclick="moveLeft(@item.Id)">
+                                <span class="glyphicon glyphicon-arrow-left">
+                                </span>
+                            </button>
+                            <button class="btn btn-success" style="padding: 1px 6px;" onclick="moveRight(@item.Id)">
+                                <span class="glyphicon glyphicon-arrow-right">
+                                </span>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="panel-body">@Html.Raw(item.Markdown)</div>
+                </div>
+            }
+        </td>
+        <td>
+            @foreach (var item in Model.Where(t => t.Stage == 2))
+            {
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <span>@item.Title</span>
+                        <span style="float:right">
+                            <button class="btn btn-primary" style="padding: 1px 6px;" onclick="moveLeft(@item.Id)">
+                                <span class="glyphicon glyphicon-arrow-left">
+                                </span>
+                            </button>
+                            <button class="btn btn-success" style="padding: 1px 6px;" onclick="moveRight(@item.Id)">
+                                <span class="glyphicon glyphicon-check">
+                                </span>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="panel-body">@Html.Raw(item.Markdown)</div>
+                </div>
+            }
+        </td>
+    </tr>
+</table>
 
-<h2>Board</h2>
+<script>
+    function moveRight(id) {
+        $("body").addClass("loading");
+        sendRequest("/api/MainApi/MoveRight?taskid=" + id, "Ошибка. Не удалось переместить запись", function () {
+            $("body").removeClass("loading");
+            location.reload(true);
+            
+        });
+    }
 
+    function moveLeft(id) {
+        $("body").addClass("loading");
+        sendRequest("/api/MainApi/MoveLeft?taskid=" + id, "Ошибка. Не удалось переместить запись", function () {
+            location.reload(true);
+            $("body").removeClass("loading");
+        });
+    }
+
+    function sendRequest(request, errorMessage, callback) {
+        $.ajax({
+            url: request,
+            type: "GET"
+        }).done(function (Result) {
+            if (!Result)
+                alert(errorMessage);
+            else {
+                callback();
+            }
+        });
+
+    }
+</script>
