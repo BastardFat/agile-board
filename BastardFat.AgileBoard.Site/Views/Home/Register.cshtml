@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Регистрация";
+}
+@model bool
+<h2>Регистрация</h2>
+@if (Model)
+{
+    <div class="alert alert-success">
+        <strong>Провал успешен!</strong> Вы все-таки ввели логин, который уже занят или может у вас не совпадает то, что должно бы совпадать, ну или вы еще как-то накосячили
+    </div>
+}
+<form action="/Home/TryRegister">
+    <div class="form-group row">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Логин</label>
+        <div class="col-sm-10">
+            <input type="text" style="max-width:200px" class="form-control" name="user_login" placeholder="Логин">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputPassword3" class="col-sm-2 col-form-label">Пароль</label>
+        <div class="col-sm-10">
+            <input type="password" style="max-width:200px" class="form-control" name="user_password" placeholder="Пароль">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputPassword3" class="col-sm-2 col-form-label">Повторите пароль</label>
+        <div class="col-sm-10">
+            <input type="password" style="max-width:200px" class="form-control" name="user_password_1" placeholder="Еще разочек">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="offset-sm-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+        </div>
+    </div>
+</form>

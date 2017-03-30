@@ -18,6 +18,11 @@ namespace BastardFat.AgileBoard.Site.Database
                     RoleName = "Admin",
                     IsAdmin = true,
                 });
+                context.Roles.Add(new Tables.Role()
+                {
+                    RoleName = "User",
+                    IsAdmin = false,
+                });
             });
 
             context.TryTransaction(() =>

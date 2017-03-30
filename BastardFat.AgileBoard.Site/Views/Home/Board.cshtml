@@ -141,8 +141,10 @@
             url: request,
             type: "GET"
         }).done(function (Result) {
-            if (!Result)
+            if (!Result) {
                 alert(errorMessage);
+                $("body").removeClass("loading");
+            }
             else {
                 callback();
             }
@@ -161,8 +163,10 @@
                 alert(xhr.statusText);
             }
         }).done(function (Result) {
-            if (!Result)
+            if (!Result) {
                 alert(errorMessage);
+                $("body").removeClass("loading");
+            }
             else {
                 callback();
             }

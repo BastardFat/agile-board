@@ -38,6 +38,17 @@ namespace BastardFat.AgileBoard.Site.Controllers
             }
         }
 
+        
+        [HttpGet]
+        public bool RemoveUser(int id)
+        {
+            using (var db = new Database.AgileBoardDBManager())
+            {
+                var usr = db.UserDBController.GetById(id);
+                if (usr == null) return false;
+                return db.UserDBController.Delete(usr.Name);
+            }
+        }
 
         [HttpPost]
         public bool AddTask([FromBody] AddTaskRequest task)

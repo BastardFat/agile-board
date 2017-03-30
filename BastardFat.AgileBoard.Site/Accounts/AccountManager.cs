@@ -49,6 +49,22 @@ namespace BastardFat.AgileBoard.Site.Accounts
             }
         }
 
+       public static bool Register(string Name, string Password)
+        {
+            if (String.IsNullOrEmpty(Name)) return false;
+            if (String.IsNullOrEmpty(Password)) return false;
+
+            using (var db = new Database.AgileBoardDBManager())
+            {
+                if (db.UserDBController.Get(Name) == null)
+                {
+                    db.UserDBController.Add(Name, Support.CryptHelper.SHA1(Password), "User");
+                    return Login(Name, Password);
+                }
+                return false;
+            }
+        }
+
         private static Role currentRole;
 
         public static Role CurrentRole
@@ -60,8 +76,8 @@ namespace BastardFat.AgileBoard.Site.Accounts
 
         public static bool Login(string Name, string Password)
         {
-            if (String.IsNullOrEmpty(Name)) throw new ArgumentNullException(nameof(Name));
-            if (String.IsNullOrEmpty(Password)) throw new ArgumentNullException(nameof(Password));
+            if (String.IsNullOrEmpty(Name)) return false;
+            if (String.IsNullOrEmpty(Password)) return false;
 
             using (var db = new Database.AgileBoardDBManager())
             {

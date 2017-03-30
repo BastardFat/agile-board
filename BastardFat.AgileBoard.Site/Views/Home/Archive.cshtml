@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "Архив";
+}
+@model List<BastardFat.AgileBoard.Site.Database.Tables.Task>
+<h2>Архив</h2>
+<div class="my_modal"><div class="loader"></div></div>
+
+@foreach (var item in Model)
+{
+    <div class="panel panel-info">
+        <div class="panel-heading cursor-hand" onclick="collapse('block_@(item.Id)')">
+            <span>
+                <span class="glyphicon glyphicon-trash" onclick="removeTask(@item.Id)" style="padding: 1px 6px;"></span>
+                @item.Title
+            </span>
+        </div>
+        <div class="panel-body" id="block_@(item.Id)">@Html.Raw(BastardFat.AgileBoard.Site.Support.Markdown.ToHtml(item.Markdown))</div>
+    </div>
+}
+
+<script>
+    function removeTask(id) {
+        $("body").addClass("loading");
+        sendRequest("/api/MainApi/RemoveTask?taskid=" + id, "Ошибка. Не удалось удалить запись", function () {
+            $("body").removeClass("loading");
+            location.reload(true);
+        });
+    }
+
+    function sendRequest(request, errorMessage, callback) {
+        $.ajax({
+            url: request,
+            type: "GET"
+        }).done(function (Result) {
+            if (!Result) {
+                alert(errorMessage);
+                $("body").removeClass("loading");
+            }
+            else {
+                callback();
+            }
+        });
+    }
+
+    function collapse(id) {
+        $("#" + id).toggleClass("collapse");
+    }
+
+</script>

@@ -78,6 +78,8 @@ namespace BastardFat.AgileBoard.Site.Database.Controllers
 
         public User Get(string Name) => Database.Users.FirstOrDefault(u => u.Name == Name);
 
+        public User GetById(int id) => Database.Users.FirstOrDefault(u => u.Id == id);
+
         public bool CheckLogin(string Name, string EncodedPassword, out User SearchResut)
         {
             SearchResut = Database.Users.FirstOrDefault(u => u.Name == Name && u.PasswordHash == EncodedPassword);

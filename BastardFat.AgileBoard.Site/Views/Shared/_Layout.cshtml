@@ -23,12 +23,18 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Глагная", "Index", "Home")</li>
                     <li>@Html.ActionLink("Доска", "Board", "Home")</li>
+                    <li>@Html.ActionLink("Архив", "Archive", "Home")</li>
                     @if (BastardFat.AgileBoard.Site.Accounts.AccountManager.CurrentUser == null)
                     {
                         <li>@Html.ActionLink("Войти", "Login", "Home")</li>
+                        <li>@Html.ActionLink("Зарегистрироваться", "Register", "Home")</li>
                     }
                     else
                     {
+                        if (BastardFat.AgileBoard.Site.Accounts.AccountManager.CurrentUser.Role.IsAdmin)
+                        {
+                            <li>@Html.ActionLink("Пользователи", "Users", "Home")</li>
+                        }
                         <li>@Html.ActionLink($"Выйти ({BastardFat.AgileBoard.Site.Accounts.AccountManager.CurrentUser.Name})", "Logout", "Home")</li>
                     }
                 </ul>
