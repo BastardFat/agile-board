@@ -14,6 +14,8 @@ namespace BastardFat.AgileBoard.Site.Database.Controllers
 
         public bool Add(Task task)
         {
+            task.AddingDate = DateTime.Now;
+            task.LastModified = DateTime.Now;
             try
             {
                 return Database.TryTransaction(() =>
@@ -32,8 +34,10 @@ namespace BastardFat.AgileBoard.Site.Database.Controllers
             {
                 if (Database.Tasks.FirstOrDefault(t => t.Id == TaskId).Stage > 2) return false;
                 return Database.TryTransaction(() =>
-                    Database.Tasks.FirstOrDefault(t => t.Id == TaskId).Stage++
-                );
+                {
+                    Database.Tasks.FirstOrDefault(t => t.Id == TaskId).Stage++;
+                    Database.Tasks.FirstOrDefault(t => t.Id == TaskId).LastModified = DateTime.Now;
+                });
             }
             catch
             {
@@ -46,8 +50,10 @@ namespace BastardFat.AgileBoard.Site.Database.Controllers
             {
                 if (Database.Tasks.FirstOrDefault(t => t.Id == TaskId).Stage < 1) return false;
                 return Database.TryTransaction(() =>
-                    Database.Tasks.FirstOrDefault(t => t.Id == TaskId).Stage--
-                );
+                {
+                    Database.Tasks.FirstOrDefault(t => t.Id == TaskId).Stage--;
+                    Database.Tasks.FirstOrDefault(t => t.Id == TaskId).LastModified = DateTime.Now;
+                });
             }
             catch
             {

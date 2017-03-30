@@ -85,3 +85,8 @@ body.loading {
 {
     cursor:pointer;
 }
+
+.panel-footer {
+    font-size: 75%;
+    padding: 3px 15px;
+}

@@ -22,6 +22,10 @@ namespace BastardFat.AgileBoard.Site.Database.Tables
 
         public int Stage { get; set; }
 
+        public DateTime AddingDate { get; set; }
+
+        public DateTime LastModified { get; set; }
+
         [ForeignKey(nameof(Tables.User))]
         [InverseProperty(nameof(Tables.User.Id))]
         public int UserId { get; set; }

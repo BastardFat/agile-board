@@ -31,12 +31,19 @@ namespace BastardFat.AgileBoard.Site.Controllers
         {
             return View(fail);
         }
+        public ActionResult ChangePassword(bool fail = false, bool success = false)
+        {
+            return View(new Tuple<bool, bool>(fail, success));
+        }
+
+
         public ActionResult TryLogin(string user_login, string user_password)
         {
             if (Accounts.AccountManager.Login(user_login, user_password))
                 return RedirectToAction(nameof(Index));
             return RedirectToAction(nameof(Login), new { fail = true });
         }
+
 
         public ActionResult TryRegister(string user_login, string user_password, string user_password_1)
         {
@@ -45,6 +52,25 @@ namespace BastardFat.AgileBoard.Site.Controllers
                 return RedirectToAction(nameof(Index));
             return RedirectToAction(nameof(Register), new { fail = true });
         }
+
+
+        public ActionResult TryChangePassword(string old_password, string new_password, string new_password_1)
+        {
+            if (Accounts.AccountManager.CurrentUser == null) return RedirectToAction(nameof(Login));
+            var userName = Accounts.AccountManager.CurrentUser.Name;
+            if (new_password != new_password_1) return RedirectToAction(nameof(ChangePassword), new { fail = true });
+            using (var db = new Database.AgileBoardDBManager())
+            {
+                if (Accounts.AccountManager.CurrentUser.PasswordHash != Support.CryptHelper.SHA1(old_password))
+                    return RedirectToAction(nameof(ChangePassword), new { fail = true });
+                db.UserDBController.ChangePassword(userName, Support.CryptHelper.SHA1(new_password));
+            }
+            if (Accounts.AccountManager.Login(userName, new_password))
+                return RedirectToAction(nameof(ChangePassword), new { success = true });
+            return RedirectToAction(nameof(ChangePassword), new { fail = true });
+        }
+
+
         public ActionResult Logout()
         {
             Accounts.AccountManager.CurrentUser = null;
@@ -70,6 +96,7 @@ namespace BastardFat.AgileBoard.Site.Controllers
                 return View(model);
             }
         }
+
 
 
     }

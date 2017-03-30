@@ -11,10 +11,13 @@
     {
         <tr>
             <td>
-                <button class="btn btn-danger" onclick="removeUser(@item.Id)">
-                    <span class="glyphicon glyphicon-trash">
-                    </span>
-                </button>
+                @if (item.Name != "Admin")
+                {
+                    <button class="btn btn-danger" onclick="removeUser(@item.Id)">
+                        <span class="glyphicon glyphicon-trash">
+                        </span>
+                    </button>
+                }
             </td>
             <td>@item.Name</td>
         </tr>
