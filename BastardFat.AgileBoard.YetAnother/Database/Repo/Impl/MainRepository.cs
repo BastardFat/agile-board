@@ -10,11 +10,12 @@ namespace BastardFat.AgileBoard.YetAnother.Database.Repo.Impl
 {
     public class MainRepository : IRepository, IDisposable
     {
-        private MainDBContext _db;
+        private readonly MainDBContext _db;
 
         public MainRepository(MainDBContext db)
         {
             _db = db;
+
         }
 
         public People AddPeople(string firstname, string lastname, int studyPlaceId, int workPlaceId) =>
@@ -106,19 +107,17 @@ namespace BastardFat.AgileBoard.YetAnother.Database.Repo.Impl
 
 
         #region IDisposable Support
-        private bool disposedValue = false;
+        private bool _disposedValue;
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (_disposedValue) return;
+            if (disposing)
             {
-                if (disposing)
-                {
-                    _db.Dispose();
-                }
-
-                disposedValue = true;
+                _db.Dispose();
             }
+
+            _disposedValue = true;
         }
 
         public void Dispose()

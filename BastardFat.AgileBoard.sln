@@ -7,6 +7,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BastardFat.AgileBoard.Site"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BastardFat.AgileBoard.YetAnother", "BastardFat.AgileBoard.YetAnother\BastardFat.AgileBoard.YetAnother.csproj", "{0C612CC7-3654-4158-9170-13276AA03CB6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ThirdVersion", "ThirdVersion", "{71E799F7-4652-48EA-B9BE-70AFA8606739}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BastardFat.ThirdVersion.Models", "BastardFat.ThirdVersion.Models\BastardFat.ThirdVersion.Models.csproj", "{17124B31-EB33-47DD-ACC8-18D9C3B92EB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BastardFat.ThirdVersion.BusinessLogic", "BastardFat.ThirdVersion.BusinessLogic\BastardFat.ThirdVersion.BusinessLogic.csproj", "{B9823D11-EE7F-48FE-A8F5-0DD9D8D7DAF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BastardFat.ThirdVersion.DatabaseInteraction", "BastardFat.ThirdVersion.DatabaseInteraction\BastardFat.ThirdVersion.DatabaseInteraction.csproj", "{FA3B79EE-3C68-4C0F-8257-63BEC62B904A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +29,25 @@ Global
 		{0C612CC7-3654-4158-9170-13276AA03CB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C612CC7-3654-4158-9170-13276AA03CB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C612CC7-3654-4158-9170-13276AA03CB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17124B31-EB33-47DD-ACC8-18D9C3B92EB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17124B31-EB33-47DD-ACC8-18D9C3B92EB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17124B31-EB33-47DD-ACC8-18D9C3B92EB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17124B31-EB33-47DD-ACC8-18D9C3B92EB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9823D11-EE7F-48FE-A8F5-0DD9D8D7DAF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9823D11-EE7F-48FE-A8F5-0DD9D8D7DAF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9823D11-EE7F-48FE-A8F5-0DD9D8D7DAF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9823D11-EE7F-48FE-A8F5-0DD9D8D7DAF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA3B79EE-3C68-4C0F-8257-63BEC62B904A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA3B79EE-3C68-4C0F-8257-63BEC62B904A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA3B79EE-3C68-4C0F-8257-63BEC62B904A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA3B79EE-3C68-4C0F-8257-63BEC62B904A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{17124B31-EB33-47DD-ACC8-18D9C3B92EB8} = {71E799F7-4652-48EA-B9BE-70AFA8606739}
+		{B9823D11-EE7F-48FE-A8F5-0DD9D8D7DAF1} = {71E799F7-4652-48EA-B9BE-70AFA8606739}
+		{FA3B79EE-3C68-4C0F-8257-63BEC62B904A} = {71E799F7-4652-48EA-B9BE-70AFA8606739}
 	EndGlobalSection
 EndGlobal
