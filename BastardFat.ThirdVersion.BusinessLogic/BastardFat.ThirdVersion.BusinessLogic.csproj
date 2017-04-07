@@ -52,7 +52,11 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Implementation\PeopleServiceImpl.cs" />
+    <Compile Include="Services\Implementation\StudyPlaceServiceImpl.cs" />
+    <Compile Include="Services\Implementation\WorkPlaceServiceImpl.cs" />
     <Compile Include="Services\Interface\IPeopleService.cs" />
+    <Compile Include="Services\Interface\IStudyPlaceService.cs" />
+    <Compile Include="Services\Interface\IWorkPlaceService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

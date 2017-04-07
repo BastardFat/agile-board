@@ -2,7 +2,7 @@
 
 namespace BastardFat.ThirdVersion.DatabaseInteraction.Repository.Interface
 {
-    interface IStudyPlacesRepository : IRepository<StudyPlace>
+    public interface IStudyPlacesRepository : IRepository<StudyPlace>
     {
     }
 }
