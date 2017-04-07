@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using System.Web;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using BastardFat.ThirdVersion.BusinessLogic.Services.Interface;
@@ -27,7 +28,8 @@ namespace BastardFat.ThirdVersion.BusinessLogic.Services.Implementation
             {
                 x.CreateMap<StudyPlace, StudyPlaceModel>()
                     .ReverseMap();
-
+                x.CreateMap<People, PeopleModel>()
+                    .ReverseMap();
             }).CreateMapper();
         }
 
@@ -52,6 +54,7 @@ namespace BastardFat.ThirdVersion.BusinessLogic.Services.Implementation
 
         public async Task<StudyPlaceModel> UpdateStudyPlace(StudyPlaceModel people)
         {
+            if(people.Id == 1) throw new HttpException(406, "Not Acceptable");
             var result = _mapper.Map<StudyPlaceModel>(
                 _studyPlacesRepository.Update(
                     _mapper.Map<StudyPlace>(people)
@@ -63,6 +66,7 @@ namespace BastardFat.ThirdVersion.BusinessLogic.Services.Implementation
 
         public async Task<StudyPlaceModel> DeleteStudyPlace(int id)
         {
+            if (id == 1) throw new HttpException(406, "Not Acceptable");
             var result = _mapper.Map<StudyPlaceModel>(
                 await _studyPlacesRepository.DeleteAsync(id)
             );

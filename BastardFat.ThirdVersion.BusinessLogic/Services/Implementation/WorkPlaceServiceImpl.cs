@@ -26,8 +26,12 @@ namespace BastardFat.ThirdVersion.BusinessLogic.Services.Implementation
             {
                 x.CreateMap<WorkPlace, WorkPlaceModel>()
                     .ReverseMap();
-
+                x.CreateMap<People, PeopleModel>()
+                    .ReverseMap();
             }).CreateMapper();
+
+            
+
         }
 
         public async Task<IEnumerable<WorkPlaceModel>> GetAllWorkPlaces()

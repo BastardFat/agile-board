@@ -7,7 +7,5 @@ namespace BastardFat.ThirdVersion.Models.Records
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-
-        public IEnumerable<PeopleModel> Peoples { get; set; }
     }
 }

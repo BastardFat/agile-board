@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using BastardFat.ThirdVersion.Models.Database;
 using Npgsql;
 
@@ -45,6 +46,12 @@ namespace BastardFat.ThirdVersion.DatabaseInteraction.Context
 
             base.OnModelCreating(modelBuilder);
         }
+
+        //public new void Dispose()
+        //{
+        //    System.Diagnostics.Debug.WriteLine("DbContext disposed!");
+        //    base.Dispose();
+        //}
 
         class NpgsqlConfiguration : DbConfiguration
         {

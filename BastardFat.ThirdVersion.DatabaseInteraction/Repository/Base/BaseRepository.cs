@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using BastardFat.ThirdVersion.DatabaseInteraction.Factory.Interface;
 using BastardFat.ThirdVersion.DatabaseInteraction.Repository.Interface;
 using BastardFat.ThirdVersion.Models.Database;
 
@@ -10,9 +11,9 @@ namespace BastardFat.ThirdVersion.DatabaseInteraction.Repository.Base
     public class BaseRepository<TEntity, TDbContext> : IRepository<TEntity>
         where TEntity : EntityBase, new() where TDbContext : DbContext
     {
-        public BaseRepository(TDbContext dbContext)
+        public BaseRepository(IDbContextFactory<TDbContext> dbContextFactory)
         {
-            DbContext = dbContext;
+            DbContextFactory = dbContextFactory;
         }
 
         public TEntity GetById(int id) => Set.FirstOrDefault(x => x.Id == id);
@@ -101,6 +102,8 @@ namespace BastardFat.ThirdVersion.DatabaseInteraction.Repository.Base
         }
 
         protected DbSet<TEntity> Set => DbContext.Set<TEntity>();
-        protected DbContext DbContext { get; }
+        protected DbContext DbContext => DbContextFactory.GetDbContext();
+
+        protected IDbContextFactory<TDbContext> DbContextFactory { get; }
     }
 }

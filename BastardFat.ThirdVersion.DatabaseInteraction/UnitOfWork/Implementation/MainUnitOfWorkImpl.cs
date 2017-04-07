@@ -6,7 +6,7 @@ namespace BastardFat.ThirdVersion.DatabaseInteraction.UnitOfWork.Implementation
 {
     public class MainUnitOfWorkImpl : UnitOfWorkBase<MainDbContext>, IMainUnitOfWork
     {
-        public MainUnitOfWorkImpl(MainDbContext dbContext) : base(dbContext)
+        public MainUnitOfWorkImpl() : base(new MainDbContext())
         {
         }
     }

@@ -49,9 +49,6 @@
     <Compile Include="Records\StudyPlaceModel.cs" />
     <Compile Include="Records\WorkPlaceModel.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Requests\" />
-    <Folder Include="Responses\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
