@@ -1,36 +1,458 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<dialog class="mdl-dialog" id="add-people-dialog">
+    <div class="mdl-dialog__content">
+        <p>
+            Добавление человека
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="new-person-firstname">
+                <label class="mdl-textfield__label" for="new-person-firstname">Имя</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="new-person-lastname">
+                <label class="mdl-textfield__label" for="new-person-lastname">Фамилия</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="new-person-description"/>
+                <label class="mdl-textfield__label" for="new-person-description">Примечание...</label>
+            </div>
+
+            <div id="menu-study-place"></div>
+            <div id="menu-work-place"></div>
+        </p>
+    </div>
+    <div class="mdl-dialog__actions">
+        <button type="button" class="mdl-button confirm">Добавить</button>
+        <button type="button" class="mdl-button close">Отмена</button>
+    </div>
+</dialog>
+
+<dialog class="mdl-dialog" id="edit-place-dialog">
+    <div class="mdl-dialog__content">
+        Редактирование
+        <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" id="edit-place-title" value=""/>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" id="edit-place-description" value=""/>
+        </div>
+    </div>
+    <div class="mdl-dialog__actions">
+        <button type="button" class="mdl-button confirm-edit">Принять</button>
+        <button type="button" class="mdl-button close-edit">Отмена</button>
+    </div>
+</dialog>
+
 
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-    <header class="mdl-layout__header">
+    <header class="mdl-layout__header mdl-color-text--white">
         <div class="mdl-layout__header-row">
             <span class="mdl-layout-title">Title</span>
         </div>
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-            <a href="#scroll-tab-1" class="mdl-layout__tab is-active">Люди</a>
-            <a href="#scroll-tab-2" class="mdl-layout__tab">Места работы</a>
-            <a href="#scroll-tab-3" class="mdl-layout__tab">Места учебы</a>
+            <a href="#scroll-tab-1" class="mdl-layout__tab mdl-color-text--white is-active">Люди</a>
+            <a href="#scroll-tab-2" class="mdl-layout__tab mdl-color-text--white">Места учебы</a>
+            <a href="#scroll-tab-3" class="mdl-layout__tab mdl-color-text--white">Места работы</a>
         </div>
     </header>
-    <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">WTF!?<br /><span class="mdl-spinner mdl-js-spinner is-active"></span></span>
-    </div>
     <main class="mdl-layout__content">
         <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
-            <div class="page-content">
-                Hello from tab 1
+            <div class="page-content" id="tab-1">
+
             </div>
         </section>
         <section class="mdl-layout__tab-panel" id="scroll-tab-2">
             <div class="page-content">
-                Hello from tab 2
+                <form action="#">
+                    <div class="mdl-textfield mdl-textfield--full-width mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="new-study-place-title">
+                        <label class="mdl-textfield__label" for="new-study-place-title">Название</label>
+                    </div>
+                    <div class="mdl-textfield mdl-textfield--full-width mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="new-study-place-description"/>
+                        <label class="mdl-textfield__label" for="new-study-place-description">Примечание...</label>
+                    </div>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="addStudyPlaceWrapper()">
+                        Добавить
+                    </button>
+                </form>
+                <div id="tab-2"></div>
             </div>
         </section>
         <section class="mdl-layout__tab-panel" id="scroll-tab-3">
             <div class="page-content">
-                Hello from tab 3
+                <form action="#">
+                    <div class="mdl-textfield mdl-textfield--full-width mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="new-work-place-title">
+                        <label class="mdl-textfield__label" for="new-study-work-title">Название</label>
+                    </div>
+                    <div class="mdl-textfield mdl-textfield--full-width mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="new-work-place-description">
+                        <label class="mdl-textfield__label" for="new-work-place-description">Примечание...</label>
+                    </div>
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="addWorkPlaceWrapper()">
+                        Добавить
+                    </button>
+                </form>
+                <div id="tab-3"></div>
             </div>
         </section>
     </main>
 </div>
+
+<script id="tab-1-template" type="text/html">
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+            style="margin: 10px"
+            onclick="showAddPeopleDialog()">
+        Добавить нового человека...
+    </button>
+    <ul class="mdl-list">
+
+        {{#each peoples}}
+        <li class="mdl-list__item mdl-list__item--three-line">
+            <span class="mdl-list__item-primary-content">
+                <i class="material-icons mdl-list__item-avatar">person</i>
+                <span>{{FirstName}} {{LastName}}</span>
+                <span class="mdl-list__item-text-body">
+                    {{Description}}
+                </span>
+            </span>
+            <span class="mdl-list__item-secondary-content">
+                <a class="mdl-list__item-secondary-action" href="#">
+                    <i class="material-icons">mode_edit</i>
+                </a>
+            </span>
+        </li>
+        {{/each}}
+    </ul>
+</script>
+<script id="places-tab-2-template" type="text/html">
+
+    <ul class="mdl-list">
+
+        {{#each places}}
+        <li class="mdl-list__item mdl-list__item--three-line">
+            <span class="mdl-list__item-primary-content">
+                <span>{{Title}}</span>
+                <span class="mdl-list__item-text-body">
+                    {{Description}}
+                </span>
+            </span>
+            <span class="mdl-list__item-secondary-content">
+                <a class="mdl-list__item-secondary-action" onclick="deleteStudyPlaceWrapper('{{Id}}')">
+                    <i class="material-icons">delete</i>
+                </a>
+                <a class="mdl-list__item-secondary-action" onclick="editStudyPlaceWrapper('{{Id}}', '{{Title}}', '{{Description}}')">
+                    <i class="material-icons">mode_edit</i>
+                </a>
+            </span>
+        </li>
+        {{/each}}
+    </ul>
+</script>
+<script id="places-tab-3-template" type="text/html">
+
+    <ul class="mdl-list">
+
+        {{#each places}}
+        <li class="mdl-list__item mdl-list__item--three-line">
+            <span class="mdl-list__item-primary-content">
+                <span>{{Title}}</span>
+                <span class="mdl-list__item-text-body">
+                    {{Description}}
+                </span>
+            </span>
+            <span class="mdl-list__item-secondary-content">
+                <a class="mdl-list__item-secondary-action" onclick="deleteWorkPlaceWrapper('{{Id}}')">
+                    <i class="material-icons">delete</i>
+                </a>
+                <a class="mdl-list__item-secondary-action" onclick="editWorkPlaceWrapper('{{Id}}', '{{Title}}', '{{Description}}')">
+                    <i class="material-icons">mode_edit</i>
+                </a>
+            </span>
+        </li>
+        {{/each}}
+    </ul>
+</script>
+
+<script id="tab-1-template-error" type="text/html">
+    <h5>
+        Some ajax error... Seems strange... Try to
+        <a href="#" onclick="init()">retry</a>.
+    </h5>
+</script>
+
+<script id="template-loading" type="text/html">
+    <div class="mdl-spinner mdl-js-spinner is-active spinner-center"></div>
+</script>
+<!--#menu-study-place #menu-study-place-selected-->
+<script id="list-elements-for-menus" type="text/html">
+    <label for="{{menuId}}">{{menuName}}</label>
+    <select id="{{menuId}}">
+        {{#each elements}}
+        <option value="{{Id}}">{{Title}}</option>
+        {{/each}}
+    </select>
+</script>
+
+<script>
+    function init() {
+
+        var ractive = new Ractive({
+            el: '#tab-1',
+            template: '#template-loading'
+        });
+
+        var ractive = new Ractive({
+            el: '#tab-2',
+            template: '#template-loading'
+        });
+
+        var ractive = new Ractive({
+            el: '#tab-3',
+            template: '#template-loading'
+        });
+
+        var ractive = new Ractive({
+            el: '#menu-study-place',
+            template: '#template-loading'
+        });
+
+        var ractive = new Ractive({
+            el: '#menu-work-place',
+            template: '#template-loading'
+        });
+
+        apiInteraction.getStudyPlaces(function(x) {
+                var ractive = new Ractive({
+                    el: '#menu-study-place',
+                    template: '#list-elements-for-menus',
+                    data: {
+                        menuId: 'menu-study-place-select',
+                        menuName: 'Место учебы',
+                        elements: x.sort()
+                    }
+                });
+
+                var ractive = new Ractive({
+                    el: '#tab-2',
+                    template: '#places-tab-2-template',
+                    data: {
+                        newTitleId: 'new-study-place-title',
+                        newDescriptionId: 'new-study-place-description',
+                        places: x.reverse()
+                    }
+                });
+            },
+            function(x) {
+                var ractive = new Ractive({
+                    el: '#menu-study-place',
+                    template: '#tab-1-template-error',
+                });
+                var ractive = new Ractive({
+                    el: '#tab-2',
+                    template: '#tab-1-template-error',
+                });
+            }
+        );
+
+        apiInteraction.getWorkPlaces(function(x) {
+                var ractive = new Ractive({
+                    el: '#menu-work-place',
+                    template: '#list-elements-for-menus',
+                    data: {
+                        menuId: 'menu-work-place-select',
+                        menuName: 'Место работы',
+                        elements: x.sort()
+                    }
+
+                });
+                var ractive = new Ractive({
+                    el: '#tab-3',
+                    template: '#places-tab-3-template',
+                    data: {
+                        newTitleId: 'new-work-place-title',
+                        newDescriptionId: 'new-work-place-description',
+                        places: x.reverse()
+                    }
+                });
+            },
+            function(x) {
+                var ractive = new Ractive({
+                    el: '#menu-work-place',
+                    template: '#tab-1-template-error',
+                });
+                var ractive = new Ractive({
+                    el: '#tab-3',
+                    template: '#tab-1-template-error',
+                });
+            }
+        );
+
+        apiInteraction.getPeoples(function(x) {
+                var ractive = new Ractive({
+                    el: '#tab-1',
+                    template: '#tab-1-template',
+                    data: {
+                        peoples: x.sort()
+                    }
+                });
+            },
+            function() {
+                var ractive = new Ractive({
+                    el: '#tab-1',
+                    template: '#tab-1-template-error',
+                });
+            }
+        );
+
+
+    };
+
+    init();
+
+    var selectedStudyPlaceId = 1;
+
+    var dialog = document.querySelector('#add-people-dialog');
+    if (!dialog.showModal) {
+        dialogPolyfill.registerDialog(dialog);
+    }
+
+    dialog.querySelector('.close').addEventListener('click',
+        function() {
+            dialog.close();
+        });
+
+    dialog.querySelector('.confirm').addEventListener('click',
+        function() {
+            apiInteraction.addPeople({
+                    FirstName: $("#new-person-firstname").val(),
+                    LastName: $("#new-person-lastname").val(),
+                    StudyPlaceId: $("#menu-study-place-select").val(),
+                    WorkPlaceId: $("#menu-work-place-select").val(),
+                    Description: $("#new-person-description").val()
+                },
+                function(x) {
+                    init();
+                },
+                function(x) {
+                    alert(x.statusText);
+                });
+            dialog.close();
+        });
+
+    function showAddPeopleDialog() {
+        dialog.showModal();
+    }
+
+    function addStudyPlaceWrapper() {
+        apiInteraction.addStudyPlace({
+                Title: $("#new-study-place-title").val(),
+                Description: $("#new-study-place-description").val(),
+            },
+            function(x) {
+                init();
+            },
+            function(x) {
+                alert(x.statusText);
+            });
+    }
+
+    function addWorkPlaceWrapper() {
+        apiInteraction.addWorkPlace({
+                Title: $("#new-work-place-title").val(),
+                Description: $("#new-work-place-description").val(),
+            },
+            function(x) {
+                $("#new-work-place-title").val("");
+                $("#new-work-place-description").val("");
+                init();
+            },
+            function(x) {
+                alert(x.statusText);
+            });
+    }
+
+    function deleteStudyPlaceWrapper(id) {
+        apiInteraction.deleteStudyPlace(id,
+            init,
+            function(x) {
+                alert(x.statusText);
+            });
+    }
+
+    function deleteWorkPlaceWrapper(id) {
+        apiInteraction.deleteWorkPlace(id,
+            init,
+            function(x) {
+                alert(x.statusText);
+            });
+    }
+
+    function editStudyPlaceWrapper(id, title, descr) {
+        $("#edit-place-title").val(title);
+        $("#edit-place-description").val(descr);
+
+        var editDialog = document.querySelector('#edit-place-dialog');
+        if (!editDialog.showModal) {
+            dialogPolyfill.registerDialog(editDialog);
+        }
+
+        editDialog.querySelector('.close-edit').addEventListener('click',
+            function() {
+                editDialog.close();
+            });
+
+        editDialog.querySelector('.confirm-edit').addEventListener('click',
+            function() {
+                apiInteraction.updateStudyPlace({
+                        Id: id,
+                        Title: $("#edit-place-title").val(),
+                        Description: $("#edit-place-description").val()
+                    },
+                    function(x) {
+                        init();
+                    },
+                    function(x) {
+                        alert(x.statusText);
+                    });
+                editDialog.close();
+            });
+        editDialog.showModal();
+    }
+
+    function editWorkPlaceWrapper(id, title, descr) {
+        $("#edit-place-title").val(title);
+        $("#edit-place-description").val(descr);
+
+        var editDialog = document.querySelector('#edit-place-dialog');
+        if (!editDialog.showModal) {
+            dialogPolyfill.registerDialog(editDialog);
+        }
+
+        editDialog.querySelector('.close-edit').addEventListener('click',
+            function () {
+                editDialog.close();
+            });
+
+        editDialog.querySelector('.confirm-edit').addEventListener('click',
+            function () {
+                apiInteraction.updateWorkPlace({
+                    Id: id,
+                    Title: $("#edit-place-title").val(),
+                    Description: $("#edit-place-description").val()
+                },
+                    function (x) {
+                        init();
+                    },
+                    function (x) {
+                        alert(x.statusText);
+                    });
+                editDialog.close();
+            });
+        editDialog.showModal();
+    }
+
+
+</script>

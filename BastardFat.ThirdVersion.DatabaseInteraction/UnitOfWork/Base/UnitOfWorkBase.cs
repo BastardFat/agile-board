@@ -1,18 +1,17 @@
-﻿using System;
-using System.Data.Entity;
-using System.Data.Entity.Core.Objects;
-using System.Data.Entity.Infrastructure;
+﻿using System.Data.Entity;
 using System.Threading.Tasks;
+using BastardFat.ThirdVersion.DatabaseInteraction.Factory.Interface;
 using BastardFat.ThirdVersion.DatabaseInteraction.UnitOfWork.Interface;
 
 namespace BastardFat.ThirdVersion.DatabaseInteraction.UnitOfWork.Base
 {
-    public abstract class UnitOfWorkBase<TDbContext> : IUnitOfWork<TDbContext>
+    public abstract class UnitOfWorkBase<TDbContext, TDbContextFactory> : IUnitOfWork<TDbContext>
         where TDbContext : DbContext
+        where TDbContextFactory: IDbContextFactory<TDbContext>
     {
-        protected UnitOfWorkBase(TDbContext dbContext)
+        protected UnitOfWorkBase(TDbContextFactory dbContextFactory)
         {
-            DbContext = dbContext;
+            DbContextFactory = dbContextFactory;
         }
 
         public virtual void Commit()
@@ -25,6 +24,7 @@ namespace BastardFat.ThirdVersion.DatabaseInteraction.UnitOfWork.Base
             await DbContext.SaveChangesAsync();
         }
 
-        protected TDbContext DbContext { get; }
+        protected TDbContext DbContext => DbContextFactory.GetDbContext();
+        protected IDbContextFactory<TDbContext> DbContextFactory { get; }
     }
 }

@@ -173,6 +173,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\api-interaction.js" />
     <Content Include="Content\material-icons.css" />
     <Content Include="Content\material.green-blue.min.css" />
     <Content Include="favicon.ico" />
@@ -190,6 +191,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\material.min.js" />
+    <Content Include="Scripts\ractive.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

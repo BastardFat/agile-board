@@ -7,10 +7,12 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/material")
+
 </head>
 <body>
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/material")
+@Scripts.Render("~/bundles/ractive")
 @RenderSection("scripts", required: false)
 
 @RenderBody()

@@ -40,7 +40,7 @@ namespace BastardFat.ThirdVersion.Web.Controllers
         }
 
         [HttpDelete]
-        public async Task<WorkPlaceModel> Delete(int id)
+        public async Task<WorkPlaceModel> Delete([FromBody] int id)
         {
             return await _service.DeleteWorkPlace(id);
         }

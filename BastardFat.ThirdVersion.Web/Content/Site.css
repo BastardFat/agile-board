@@ -6,3 +6,9 @@
     white-space: normal;
 }
 
+.spinner-center {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    margin-left: -14px !important;
+}

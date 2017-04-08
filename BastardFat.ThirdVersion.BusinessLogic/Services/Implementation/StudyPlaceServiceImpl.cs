@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using AutoMapper;
@@ -14,15 +15,16 @@ namespace BastardFat.ThirdVersion.BusinessLogic.Services.Implementation
 {
     public class StudyPlaceServiceImpl : IStudyPlaceService
     {
-
         private readonly IStudyPlacesRepository _studyPlacesRepository;
+        private readonly IPeoplesRepository _peoplesRepository;
         private readonly IMainUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public StudyPlaceServiceImpl(IStudyPlacesRepository studyPlacesRepository, IMainUnitOfWork unitOfWork)
+        public StudyPlaceServiceImpl(IStudyPlacesRepository studyPlacesRepository, IMainUnitOfWork unitOfWork, IPeoplesRepository peoplesRepository)
         {
             _studyPlacesRepository = studyPlacesRepository;
             _unitOfWork = unitOfWork;
+            _peoplesRepository = peoplesRepository;
 
             _mapper = new MapperConfiguration(x =>
             {
@@ -43,35 +45,34 @@ namespace BastardFat.ThirdVersion.BusinessLogic.Services.Implementation
 
         public async Task<StudyPlaceModel> AddStudyPlace(StudyPlaceModel people)
         {
-            var result = _mapper.Map<StudyPlaceModel>(
-                _studyPlacesRepository.Add(
-                    _mapper.Map<StudyPlace>(people)
-                )
+            var result = _studyPlacesRepository.Add(
+                _mapper.Map<StudyPlace>(people)
             );
             await _unitOfWork.CommitAsync();
-            return result;
+            return _mapper.Map<StudyPlaceModel>(result);
         }
 
         public async Task<StudyPlaceModel> UpdateStudyPlace(StudyPlaceModel people)
         {
-            if(people.Id == 1) throw new HttpException(406, "Not Acceptable");
-            var result = _mapper.Map<StudyPlaceModel>(
-                _studyPlacesRepository.Update(
-                    _mapper.Map<StudyPlace>(people)
-                )
+            if (people.Id == 1) throw new HttpException(406, "Not Acceptable");
+            var result = _studyPlacesRepository.Update(
+                _mapper.Map<StudyPlace>(people)
             );
             await _unitOfWork.CommitAsync();
-            return result;
+            return _mapper.Map<StudyPlaceModel>(result);
         }
 
         public async Task<StudyPlaceModel> DeleteStudyPlace(int id)
         {
             if (id == 1) throw new HttpException(406, "Not Acceptable");
-            var result = _mapper.Map<StudyPlaceModel>(
-                await _studyPlacesRepository.DeleteAsync(id)
-            );
+            await _peoplesRepository
+                .Query()
+                .Where(p => p.StudyPlaceId == id)
+                .ForEachAsync(p => p.StudyPlaceId = 1);
+
+            var result = _studyPlacesRepository.Delete(id);
             await _unitOfWork.CommitAsync();
-            return result;
+            return _mapper.Map<StudyPlaceModel>(result);
         }
     }
 }

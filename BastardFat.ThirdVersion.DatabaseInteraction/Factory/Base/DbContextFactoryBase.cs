@@ -29,7 +29,7 @@ namespace BastardFat.ThirdVersion.DatabaseInteraction.Factory.Base
             {
                 if (disposing)
                 {
-                    _context.Dispose();
+                    _context?.Dispose();
                 }
                 _disposedValue = true;
             }

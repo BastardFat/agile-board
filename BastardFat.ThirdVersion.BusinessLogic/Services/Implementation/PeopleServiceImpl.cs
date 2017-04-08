@@ -26,10 +26,12 @@ namespace BastardFat.ThirdVersion.BusinessLogic.Services.Implementation
             _mapper = new MapperConfiguration(x =>
             {
                 x.CreateMap<People, PeopleModel>()
+                    .ForMember(dest => dest.StudyPlaceDescription, opt => opt.MapFrom(src => src.StudyPlace.Description))
+                    .ForMember(dest => dest.StudyPlaceTitle, opt => opt.MapFrom(src => src.StudyPlace.Title))
+                    .ForMember(dest => dest.WorkPlaceDescription, opt => opt.MapFrom(src => src.WorkPlace.Description))
+                    .ForMember(dest => dest.WorkPlaceTitle, opt => opt.MapFrom(src => src.WorkPlace.Title))
                     .ReverseMap();
-
             }).CreateMapper();
-
         }
 
 
@@ -61,33 +63,29 @@ namespace BastardFat.ThirdVersion.BusinessLogic.Services.Implementation
 
         public async Task<PeopleModel> AddPeople(PeopleModel people)
         {
-            var result =  _mapper.Map<PeopleModel>(
-                _peoplesRepository.Add(
-                    _mapper.Map<People>(people)
-                    )
-                );
+            var result = _peoplesRepository.Add(
+                _mapper.Map<People>(people)
+            );
+
             await _unitOfWork.CommitAsync();
-            return result;
+            return _mapper.Map<PeopleModel>(result);
         }
 
         public async Task<PeopleModel> UpdatePeople(PeopleModel people)
         {
-            var result = _mapper.Map<PeopleModel>(
-                _peoplesRepository.Update(
-                    _mapper.Map<People>(people)
-                )
+            var result = _peoplesRepository.Update(
+                _mapper.Map<People>(people)
             );
+
             await _unitOfWork.CommitAsync();
-            return result;
+            return _mapper.Map<PeopleModel>(result);
         }
 
         public async Task<PeopleModel> DeletePeople(int id)
         {
-            var result =  _mapper.Map<PeopleModel>(
-                await _peoplesRepository.DeleteAsync(id)
-            );
+            var result = await _peoplesRepository.DeleteAsync(id);
             await _unitOfWork.CommitAsync();
-            return result;
+            return _mapper.Map<PeopleModel>(result);
         }
     }
 }
